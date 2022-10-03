@@ -38,11 +38,11 @@ export default function TextEditor({ documentId, quill, handleQuill }) {
       return;
     }
 
-    socket.on("user_join", (socket) => {
+    socket.on("show_my_cursor", (socket) => {
       cursor.createCursor(socket.id, socket.nickname, randomColor());
     });
 
-    socket.on("inform_collaborator", (sockets) => {
+    socket.on("show_other_cursors", (sockets) => {
       sockets.forEach(socket => {
         cursor.createCursor(socket.id, socket.nickname, randomColor());
       });
