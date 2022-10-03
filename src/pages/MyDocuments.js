@@ -36,6 +36,7 @@ export default function MyDocuments() {
         return (
           <DocumentCard
             key={document._id}
+            documentId={document._id}
             handleClick={() => navigate(`/documents/${document._id}`)}
             textBody={document.body.ops[0].insert || ""}
             createdAt={document.createdAt}
