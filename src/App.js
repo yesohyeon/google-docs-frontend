@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 
 import Login from "./pages/Login";
-import Home from "./pages/Home";
+import MyDocuments from "./pages/MyDocuments";
 import Document from "./pages/Document";
 
 import { UserContext } from "./context/userContext";
@@ -12,9 +12,15 @@ export default function App() {
 
   return (
     <Routes>
-      <Route path="/" element={loggedInUser ? <Home /> : <Navigate to="/login" />} />
+      <Route
+        path="/"
+        element={loggedInUser ? <MyDocuments /> : <Navigate to="/login" />}
+      />
       <Route path="/login" element={<Login />} />
-      <Route path="/documents/:documentId" element={loggedInUser ? <Document /> : <Navigate to="/login" />} />
+      <Route
+        path="/documents/:documentId"
+        element={loggedInUser ? <Document /> : <Navigate to="/login" />}
+      />
     </Routes>
   );
 }

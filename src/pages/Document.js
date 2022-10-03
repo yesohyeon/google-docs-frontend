@@ -27,7 +27,8 @@ export default function Document() {
 
   const handleSaveClick = async () => {
     try {
-      const { status } = await axiosInstance.patch(`/documents/${documentId}`, { body: quill.getContents() });
+      const { status } = await axiosInstance
+        .patch(`/documents/${documentId}`, { body: quill.getContents() });
 
       if (status === 200) {
         navigate("/");

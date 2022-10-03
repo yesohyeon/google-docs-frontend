@@ -26,9 +26,16 @@ export default function NavBar() {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         const googleId = user?.reloadUserInfo.localId;
-        const { status, data: { documentId } } = await axiosInstance.post("/documents", { googleId });
+        const {
+          status,
+          data: { documentId }
+        } = await axiosInstance.post("/documents", { googleId });
 
-        status === 201 ? navigate(`/documents/${documentId}`) : setErrorMessage(ERROR.FAIL_CREATE_DOCUMENT);
+        status === 201 ? (
+          navigate(`/documents/${documentId}`)
+        ) : (
+          setErrorMessage(ERROR.FAIL_CREATE_DOCUMENT)
+        );
       } else {
         authenticate();
       }

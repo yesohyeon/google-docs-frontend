@@ -1,9 +1,9 @@
 function debounce(func, wait) {
   let timeout;
 
-  return function (...args) {
+  return function(...args) {
     const context = this;
-    const later = function () {
+    const later = function() {
       timeout = null;
       func.apply(context, args);
     };

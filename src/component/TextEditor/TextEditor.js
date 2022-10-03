@@ -57,6 +57,7 @@ export default function TextEditor({ documentId, quill, handleQuill }) {
     if (!socket || !quill) {
       return;
     }
+
     socket.once("load_document", (document) => {
       quill.setContents(document);
       quill.enable();
