@@ -5,6 +5,7 @@ import { signInWithPopup } from "firebase/auth";
 import axiosInstance from "../api/axiosInstance";
 
 import { auth, provider } from "../config/firebase";
+import { ERROR } from "../constants/error";
 
 export default function Login() {
   const [errorMessage, setErrorMessage] = useState("");
@@ -20,18 +21,14 @@ export default function Login() {
           }
       } = await signInWithPopup(auth, provider);
 
-      const { data: { error }, status } = await axiosInstance.post(
+      const { status } = await axiosInstance.post(
         "/google/login",
         { username: displayName, googleId: localId }
       );
 
-      if (status === 200) {
-        navigate("/");
-      } else {
-        setErrorMessage(error);
-      }
+      status === 200 ? navigate("/") : setErrorMessage(ERROR.FAIL_LOGIN);
     } catch (err) {
-      setErrorMessage(err);
+      setErrorMessage(ERROR.FAIL_LOGIN);
     }
   };
 
