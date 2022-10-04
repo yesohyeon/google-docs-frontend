@@ -1,13 +1,12 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-
 import styled from "styled-components";
-import axiosInstance from "../api/axiosInstance";
 
 import NavBar from "../component/NavBar";
 import DocumentCard from "../component/DocumentCard";
 
 import { UserContext } from "../context/userContext";
+import axiosInstance from "../api/axiosInstance";
 
 export default function MyDocuments() {
   const {

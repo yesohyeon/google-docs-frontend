@@ -5,7 +5,7 @@ import { signOut, onAuthStateChanged } from "firebase/auth";
 import styled from "styled-components";
 
 import axiosInstance from "../api/axiosInstance";
-import { auth, authenticate } from "../config/firebase";
+import { auth, redirectToLogin } from "../config/firebase";
 
 import { UserContext } from "../context/userContext";
 import { ERROR } from "../constants/error";
@@ -20,7 +20,7 @@ export default function NavBar() {
       if (user) {
         navigate("/");
       } else {
-        authenticate();
+        redirectToLogin();
       }
     });
   };
@@ -33,13 +33,9 @@ export default function NavBar() {
           data: { documentId }
         } = await axiosInstance.post("/documents", { googleId });
 
-        status === 201 ? (
-          navigate(`/documents/${documentId}`)
-        ) : (
-          setErrorMessage(ERROR.FAIL_CREATE_DOCUMENT)
-        );
+        status === 201 ? navigate(`/documents/${documentId}`) : setErrorMessage(ERROR.FAIL_CREATE_DOCUMENT);
       } else {
-        authenticate();
+        redirectToLogin();
       }
     });
   };

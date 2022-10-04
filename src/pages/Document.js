@@ -17,9 +17,9 @@ export default function Document() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const { documentId } = useParams();
-  const { loggedInUser: { reloadUserInfo: { localId } } } = useContext(UserContext);
   const navigate = useNavigate();
 
+  const { loggedInUser: { reloadUserInfo: { localId } } } = useContext(UserContext);
   const [socket, disconnect] = useSocket(documentId);
 
   const handleHomeClick = () => {
@@ -31,9 +31,7 @@ export default function Document() {
       const { status } = await axiosInstance
         .patch(`/documents/${documentId}`, { body: quill.getContents() });
 
-      if (status === 200) {
-        navigate("/");
-      }
+      status === 200 ? navigate("/") : setErrorMessage(ERROR.FAIL_SAVE_DOCUMENT);
     } catch (err) {
       setErrorMessage(ERROR.FAIL_SAVE_DOCUMENT);
     }
@@ -43,9 +41,7 @@ export default function Document() {
     try {
       const { status } = await axiosInstance.delete(`/documents/${documentId}`);
 
-      if (status === 200) {
-        navigate("/");
-      }
+      status === 200 ? navigate("/") : setErrorMessage(ERROR.FAIL_DELETE_DOCUMENT);
     } catch (err) {
       setErrorMessage(ERROR.FAIL_DELETE_DOCUMENT);
     }

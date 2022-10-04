@@ -7,7 +7,6 @@ import randomColor from "randomcolor";
 
 import { UserContext } from "../../context/userContext";
 import useSocket from "../../hooks/useSocket";
-
 import { selectionChangeHandler } from "../../utils/selectionChangeHandler";
 
 import "./styles.css";
@@ -20,18 +19,6 @@ export default function TextEditor({ documentId, quill, handleQuill }) {
   const cursor = useMemo(() => {
     return quill ? quill.getModule("cursors") : null;
   }, [quill]);
-
-  const updateContents = (delta) => {
-    quill.updateContents(delta);
-  };
-
-  const sendChanges = (delta, oldDelta, source) => {
-    if (source !== "user") {
-      return;
-    }
-
-    socket.emit("send_changes", delta);
-  };
 
   useEffect(() => {
     if (!cursor) {
@@ -58,12 +45,24 @@ export default function TextEditor({ documentId, quill, handleQuill }) {
       return;
     }
 
+    const updateContents = (delta) => {
+      quill.updateContents(delta);
+    };
+
+    const sendChanges = (delta, oldDelta, source) => {
+      if (source !== "user") {
+        return;
+      }
+
+      socket.emit("send_changes", delta);
+    };
+
+    socket.emit("get_document", documentId, username);
+
     socket.once("load_document", (document) => {
       quill.setContents(document);
       quill.enable();
     });
-
-    socket.emit("get_document", documentId, username);
 
     const interval = setInterval(() => {
       socket.emit("save_document", quill.getContents());
@@ -82,7 +81,7 @@ export default function TextEditor({ documentId, quill, handleQuill }) {
       socket.off("receive_changes");
       quill.off("text-change");
     }
-  }, [quill, documentId]);
+  }, [quill, documentId, username]);
 
 
   const wrapperRef = useCallback((wrapper) => {

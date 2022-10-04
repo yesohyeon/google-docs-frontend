@@ -16,6 +16,6 @@ export const auth = getAuth(app);
 
 export const provider = new GoogleAuthProvider();
 
-export async function authenticate() {
+export async function redirectToLogin() {
   await signInWithRedirect(auth, provider);
 }
