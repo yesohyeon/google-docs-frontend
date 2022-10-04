@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import useSocket from "../hooks/useSocket";
 
-export default function DocumentCard({ documentId, handleClick, textBody, createdAt }) {
+export default function DocumentCard({ documentId, handleClick, textBody, updatedAt }) {
   const [isWriting, setIsWriting] = useState(false);
   const [socket, disconnect] = useSocket(documentId);
 
@@ -16,19 +16,26 @@ export default function DocumentCard({ documentId, handleClick, textBody, create
   }, [documentId]);
 
   return (
-    <>
-      <Wrapper onClick={handleClick} data-testid="documentCard">
-        <div>{textBody}</div>
-        <small>{createdAt}</small>
-        <div>{isWriting && "Writing...."}</div>
-      </Wrapper>
-    </>
+    <Wrapper onClick={handleClick} data-testid="documentCard">
+      <div>{textBody.length > 60 ? textBody.slice(0, 60) + "..." : textBody}</div>
+      <small>latest update : {updatedAt.split("T", 1)[0]}</small>
+      <div>{isWriting && "Writing...."}</div>
+    </Wrapper>
   );
 }
 
 const Wrapper = styled.div`
-  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  width: 800px;
+  height: 80px;
+  border: none;
   border-radius: 10px;
-  margin: 5px;
-  padding: 5px;
+  margin: 10px;
+  padding: 10px;
+  background-color: #d1e7b7;
+  
+  &>: last-child {
+    text-align: right;
+  }
 `;

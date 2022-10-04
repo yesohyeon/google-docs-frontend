@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 import TextEditor from "../component/TextEditor/TextEditor";
 
@@ -60,11 +61,13 @@ export default function Document() {
   return (
     <>
       <div>{errorMessage}</div>
-      <button onClick={handleHomeClick}>Home</button>
-      <button onClick={handleSaveClick}>Save Document</button>
-      {!isChecking && localId === creatorId && (
-        <button onClick={handleDeleteClick}>Delete Document</button>
-      )}
+      <ButtonWrapper>
+        <button onClick={handleHomeClick}>My documents</button>
+        <button onClick={handleSaveClick}>Save</button>
+        {!isChecking && localId === creatorId && (
+          <button onClick={handleDeleteClick}>Delete</button>
+        )}
+      </ButtonWrapper>
       <TextEditor
         documentId={documentId}
         quill={quill}
@@ -73,3 +76,17 @@ export default function Document() {
     </>
   );
 }
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  
+  > * {
+    margin: 5px;
+    padding: 10px;
+    border: 4px solid #D3D3D3;
+    border-radius: 8px;
+    font-size: 16px;
+    color: #949494;
+  }
+`;

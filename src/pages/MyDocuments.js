@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
+import styled from "styled-components";
 import axiosInstance from "../api/axiosInstance";
 
 import NavBar from "../component/NavBar";
@@ -30,19 +31,33 @@ export default function MyDocuments() {
   }, [localId]);
 
   return (
-    <>
+    <Wrapper>
       <NavBar />
-      {documents.map((document) => {
-        return (
-          <DocumentCard
-            key={document._id}
-            documentId={document._id}
-            handleClick={() => navigate(`/documents/${document._id}`)}
-            textBody={document.body.ops[0].insert || ""}
-            createdAt={document.createdAt}
-          />
-        );
-      })}
-    </>
+      <DocumentWrapper>
+        {documents.map((document) => {
+          return (
+            <DocumentCard
+              key={document._id}
+              documentId={document._id}
+              handleClick={() => navigate(`/documents/${document._id}`)}
+              textBody={document.body.ops[0].insert || ""}
+              updatedAt={document.updatedAt}
+            />
+          );
+        })}
+      </DocumentWrapper>
+    </Wrapper>
   );
 }
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const DocumentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 35px;
+`;

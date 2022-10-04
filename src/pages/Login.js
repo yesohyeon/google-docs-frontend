@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import { signInWithPopup } from "firebase/auth";
+import styled from "styled-components";
 
 import axiosInstance from "../api/axiosInstance";
 
@@ -33,9 +35,25 @@ export default function Login() {
   };
 
   return (
-    <>
-      <button onClick={handleClick}>Google Login</button>
+    <Wrapper>
+      <Button onClick={handleClick}>Login</Button>
       <div>{errorMessage}</div>
-    </>
+    </Wrapper>
   );
 }
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+`;
+
+const Button = styled.button`
+  padding: 15px;
+  border: 4px solid #c5e1a5;
+  border-radius: 8px;
+  font-size: 30px;
+  color: #5D8700;
+`;

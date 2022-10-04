@@ -1,6 +1,8 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+
 import { signOut, onAuthStateChanged } from "firebase/auth";
+import styled from "styled-components";
 
 import axiosInstance from "../api/axiosInstance";
 import { auth, authenticate } from "../config/firebase";
@@ -55,13 +57,27 @@ export default function NavBar() {
   };
 
   return (
-    <>
+    <Wrapper>
       <nav>
-        <button onClick={handleHomeClick}>Home</button>
-        <button onClick={handleCreateClick}>Create document</button>
-        <button onClick={handleLogOutClick}>Log out</button>
+        <Button onClick={handleHomeClick}>My documents</Button>
+        <Button onClick={handleCreateClick}>Create document</Button>
+        <Button onClick={handleLogOutClick}>Log out</Button>
       </nav>
       <div>{errorMessage}</div>
-    </>
+    </Wrapper>
   );
 }
+
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const Button = styled.button`
+  margin: 5px;
+  padding: 10px;
+  border: 4px solid #c5e1a5;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #5D8700;
+`;
