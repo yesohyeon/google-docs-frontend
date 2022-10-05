@@ -17,12 +17,18 @@ export default function Pages() {
         path="/"
         element={loggedInUser ? <MyDocuments /> : <Navigate to="/login" />}
       />
-      <Route path="/login" element={<Login />} />
+      <Route
+        path="/login"
+        element={<Login />}
+      />
       <Route
         path="/documents/:documentId"
         element={loggedInUser ? <Document /> : <Navigate to="/login" />}
       />
-      <Route path="*" element={<NotFound />} />
+      <Route
+        path="*"
+        element={<NotFound />}
+      />
     </Routes>
   );
 }

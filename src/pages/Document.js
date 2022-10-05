@@ -52,7 +52,7 @@ export default function Document() {
       setCreatorId(creatorId);
       setIsChecking(false);
     });
-  }, [documentId])
+  }, [documentId]);
 
   return (
     <>

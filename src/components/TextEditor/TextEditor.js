@@ -80,7 +80,7 @@ export default function TextEditor({ documentId, quill, handleQuill }) {
       clearInterval(interval);
       socket.off("receive_changes");
       quill.off("text-change");
-    }
+    };
   }, [quill, documentId, username]);
 
 

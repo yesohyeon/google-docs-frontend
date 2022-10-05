@@ -16,7 +16,7 @@ export default function NavBar() {
   const navigate = useNavigate();
 
   const handleHomeClick = () => {
-    onAuthStateChanged(auth, async (user) => {
+    onAuthStateChanged(auth, (user) => {
       if (user) {
         navigate("/");
       } else {
@@ -27,16 +27,20 @@ export default function NavBar() {
 
   const handleCreateClick = () => {
     onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        const googleId = user?.reloadUserInfo.localId;
-        const {
-          status,
-          data: { documentId }
-        } = await axiosInstance.post("/documents", { googleId });
+      try {
+        if (user) {
+          const googleId = user?.reloadUserInfo.localId;
+          const {
+            status,
+            data: { documentId }
+          } = await axiosInstance.post("/documents", { googleId });
 
-        status === 201 ? navigate(`/documents/${documentId}`) : setErrorMessage(ERROR.FAIL_CREATE_DOCUMENT);
-      } else {
-        redirectToLogin();
+          status === 201 ? navigate(`/documents/${documentId}`) : setErrorMessage(ERROR.FAIL_CREATE_DOCUMENT);
+        } else {
+          redirectToLogin();
+        }
+      } catch (err) {
+        setErrorMessage(ERROR.FAIL_CREATE_DOCUMENT);
       }
     });
   };

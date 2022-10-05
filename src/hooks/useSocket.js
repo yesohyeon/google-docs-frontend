@@ -1,5 +1,5 @@
-import { io } from "socket.io-client";
 import { useCallback } from "react";
+import { io } from "socket.io-client";
 
 const sockets = {};
 const backUrl = process.env.REACT_APP_BACK_URL;
