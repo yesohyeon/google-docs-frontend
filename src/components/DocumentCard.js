@@ -18,7 +18,7 @@ export default function DocumentCard({ documentId, handleClick, textBody, update
   return (
     <Wrapper onClick={handleClick} data-testid="documentCard">
       <div>{textBody.length > 60 ? textBody.slice(0, 60) + "..." : textBody}</div>
-      <small>latest update : {updatedAt.split("T", 1)[0]}</small>
+      <small>latest update : {updatedAt}</small>
       <div>{isWriting && "Writing...."}</div>
     </Wrapper>
   );

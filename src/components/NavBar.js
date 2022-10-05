@@ -24,6 +24,7 @@ export default function NavBar() {
       }
     });
   };
+
   const handleCreateClick = () => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {

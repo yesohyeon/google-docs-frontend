@@ -8,7 +8,7 @@ import { auth } from "../config/firebase";
 
 function AuthProvider({ children }) {
   const [loggedInUser, setLoggedInUser] = useState(null);
-  const [isLoginChecked, setIsLoginChecked] = useState(false);
+  const [isAuthStateChecked, setIsAuthStateChecked] = useState(false);
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
@@ -18,16 +18,16 @@ function AuthProvider({ children }) {
         axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         setLoggedInUser(user);
       } else {
-        setLoggedInUser(null)
+        setLoggedInUser(null);
       }
 
-      setIsLoginChecked(true);
+      setIsAuthStateChecked(true);
     });
   }, []);
 
   return (
     <>
-      {isLoginChecked && (
+      {isAuthStateChecked && (
         <UserContext.Provider value={{ loggedInUser, setLoggedInUser }}>
           {children}
         </UserContext.Provider>)

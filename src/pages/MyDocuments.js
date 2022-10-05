@@ -2,26 +2,33 @@ import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import NavBar from "../component/NavBar";
-import DocumentCard from "../component/DocumentCard";
+import NavBar from "../components/NavBar";
+import DocumentCard from "../components/DocumentCard";
 
 import { UserContext } from "../context/userContext";
 import axiosInstance from "../api/axiosInstance";
+import { ERROR } from "../constants/error";
 
 export default function MyDocuments() {
+  const [documents, setDocuments] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
+
   const {
     loggedInUser: { reloadUserInfo: { localId } }
   } = useContext(UserContext);
-  const [documents, setDocuments] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    async function getDocuments() {
-      const {
-        data: { documents }
-      } = await axiosInstance.get(`/documents/${localId}`);
+    const getDocuments = async () => {
+      try {
+        const {
+          data: { documents }
+        } = await axiosInstance.get(`/documents/${localId}`);
 
-      setDocuments(documents);
+        setDocuments(documents);
+      } catch (err) {
+        setErrorMessage(ERROR.FAIL_GET_DOCUMENTS);
+      }
     }
 
     if (localId) {
@@ -31,6 +38,7 @@ export default function MyDocuments() {
 
   return (
     <Wrapper>
+      <div>{errorMessage}</div>
       <NavBar />
       <DocumentWrapper>
         {documents.map((document) => {
@@ -40,7 +48,7 @@ export default function MyDocuments() {
               documentId={document._id}
               handleClick={() => navigate(`/documents/${document._id}`)}
               textBody={document.body.ops[0].insert || ""}
-              updatedAt={document.updatedAt}
+              updatedAt={document.updatedAt.split("T", 1)[0]}
             />
           );
         })}

@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import TextEditor from "../component/TextEditor/TextEditor";
+import TextEditor from "../components/TextEditor/TextEditor";
 
 import { UserContext } from "../context/userContext";
 import useSocket from "../hooks/useSocket";
